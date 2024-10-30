@@ -51,7 +51,7 @@ export const navData = [
       { title: 'Sales', path: paths.dashboard.sale, icon: ICONS.ecommerce },
       { title: 'Resale', path: paths.dashboard.resale, icon: ICONS.ecommerce },
       { title: 'Contact', path: paths.dashboard.contact, icon: ICONS.ecommerce },
-      { title: 'corrosion', path: paths.dashboard.corrosion, icon: ICONS.ecommerce },
+      { title: 'Corrosion', path: paths.dashboard.corrosion, icon: ICONS.ecommerce },
 
       { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
     ],
