@@ -1,6 +1,5 @@
 // src/apis/api.js
-import axiosInstance from 'src/utils/axios';
-import { endpoints } from 'src/utils/axios';
+import axiosInstance, { endpoints } from 'src/utils/axios';
 
 export const getCareerApplications = async (page = 1, limit=10) => {
   try {

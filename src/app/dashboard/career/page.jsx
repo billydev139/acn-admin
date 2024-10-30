@@ -2,7 +2,7 @@
 import { CONFIG } from 'src/config-global';
 
 import { BlankView } from 'src/sections/blank/view';
-import { CareerApplicationsListView, ListView } from 'src/sections/career';
+import { CareerApplicationsListView} from 'src/sections/career';
 
 // ----------------------------------------------------------------------
 

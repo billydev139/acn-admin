@@ -63,7 +63,8 @@ export function CareerApplicationsListView() {
     toast.success('Delete success!');
     setTableData(updatedData);
     confirmRows.onFalse();
-  }, [selectedRowIds, tableData]);
+  }, [selectedRowIds, tableData, confirmRows]);
+  
 
   const columns = [
     { field: 'fullName', headerName: 'Full Name', width: 200 },
