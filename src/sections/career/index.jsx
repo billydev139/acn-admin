@@ -17,6 +17,7 @@ import { EmptyContent } from 'src/components/empty-content';
 import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import { useBoolean } from 'src/hooks/use-boolean';
+import { getCareerApplications } from 'src/apis/careerApi';
 
 // ----------------------------------------------------------------------
 
@@ -27,23 +28,8 @@ export function CareerApplicationsListView() {
   const [filterButtonEl, setFilterButtonEl] = useState(null);
 
   useEffect(() => {
-    // Simulate fetching data (replace this with actual API call if needed)
     const fetchData = async () => {
-      const response = {
-        message: "Career applications retrieved successfully!",
-        data: [
-          {
-            fullName: "John Doe",
-            email: "johndoe@example.com",
-            phoneNumber: "1234567890",
-            country: "Canada",
-            cv: "/uploads/cv/johndoe.pdf",
-            photo: "/uploads/photos/johndoe.jpg",
-            motivationLetter: "/uploads/motivationLetter/johndoe.pdf",
-          },
-          // Add more records as needed
-        ],
-      };
+      const response = await getCareerApplications();
       setTableData(response.data);
     };
     fetchData();
@@ -51,7 +37,7 @@ export function CareerApplicationsListView() {
 
   const handleDeleteRow = useCallback(
     (id) => {
-      const updatedData = tableData.filter((row) => row.email !== id); // Assuming email is unique
+      const updatedData = tableData.filter((row) => row.email !== id);
       toast.success('Delete success!');
       setTableData(updatedData);
     },
@@ -64,7 +50,6 @@ export function CareerApplicationsListView() {
     setTableData(updatedData);
     confirmRows.onFalse();
   }, [selectedRowIds, tableData, confirmRows]);
-  
 
   const columns = [
     { field: 'fullName', headerName: 'Full Name', width: 200 },
@@ -135,6 +120,7 @@ export function CareerApplicationsListView() {
         />
 
         <Card sx={{ flexGrow: 1, mt: 3 }}>
+
           <DataGrid
             checkboxSelection
             disableRowSelectionOnClick

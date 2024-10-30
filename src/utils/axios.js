@@ -50,6 +50,10 @@ export const endpoints = {
   kanban: '/api/kanban',
   calendar: '/api/calendar',
   career: '/api/career',
+  resale: 'api/resale',
+  sales: 'api/sales-contact',
+  corrosion: 'api/corrosion',
+  contact: 'api/contact',
   auth: {
     me: '/api/auth/me',
     signIn: '/api/auth/login',
