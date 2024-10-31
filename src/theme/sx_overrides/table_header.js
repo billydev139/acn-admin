@@ -1,5 +1,6 @@
 import { gridClasses } from "@mui/material";
 import { text } from "../core";
+import { color } from "framer-motion";
 
 export const table_header_sx={
     [`& .${gridClasses.cell}`]: {
@@ -12,5 +13,9 @@ export const table_header_sx={
     },
     "& .css-t89xny-MuiDataGrid-columnHeaderTitle ": {
         color: "white !important"
+    }, 
+    "& .css-157q7pp .MuiDataGrid-columnHeaderTitleContainer": {
+        color:"white !important"
     }
+  
   }
