@@ -5,7 +5,7 @@ import { CorrosionApplicationsListView } from 'src/sections/corrosion';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Page two | Dashboard - ${CONFIG.appName}` };
+export const metadata = { title: `Corrosion | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
   return <CorrosionApplicationsListView title="Page two" />;

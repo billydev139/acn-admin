@@ -5,8 +5,8 @@ import { ContactApplicationsListView } from 'src/sections/contact';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Page two | Dashboard - ${CONFIG.appName}` };
+export const metadata = { title: `Contact | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
-  return <ContactApplicationsListView  />;
+  return <ContactApplicationsListView />;
 }

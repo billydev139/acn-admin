@@ -9,8 +9,7 @@ import {
   GridToolbarQuickFilter,
   GridActionsCellItem,
 } from '@mui/x-data-grid';
-
-import { Box, Stack } from '@mui/material';
+import { Box, Fade, Modal, Stack, TextField, Typography } from '@mui/material';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
@@ -21,6 +20,7 @@ import { deleteCareerApplication, getCareerApplications } from 'src/apis/careerA
 import { DashboardContent } from 'src/layouts/dashboard';
 import { table_header_sx } from 'src/theme/sx_overrides/table_header';
 import { button_sx } from 'src/theme/sx_overrides/button';
+import ViewModal from './viewModal';
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +30,12 @@ export function CareerApplicationsListView() {
   const [selectedRowIds, setSelectedRowIds] = useState([]);
   const [filterButtonEl, setFilterButtonEl] = useState(null);
   const [deleteing, setDeleteing] = useState(false)
+  const [open, setOpen] = useState(false);
+  const [dataRow, setDataRow] = useState()
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await getCareerApplications();
@@ -61,7 +67,9 @@ export function CareerApplicationsListView() {
     setTableData(updatedData);
     confirmRows.onFalse();
   }, [selectedRowIds, tableData, confirmRows]);
-
+  const handleView = useCallback(() => {
+    handleOpen()
+  }, [])
   const columns = [
     { field: 'fullName', headerName: 'Full Name', width: 200 },
     { field: 'email', headerName: 'Email', width: 250 },
@@ -100,8 +108,12 @@ export function CareerApplicationsListView() {
           showInMenu
           icon={<Iconify icon="solar:eye-bold" />}
           label="View"
-          onClick={() => console.log('View', params.row)}
-        />,
+          onClick={() => {
+            setDataRow(params.row);
+            handleView();
+          }}
+        />
+        ,
         <GridActionsCellItem
           showInMenu
           icon={<Iconify icon="solar:trash-bin-trash-bold" />}
@@ -178,7 +190,11 @@ export function CareerApplicationsListView() {
             </Button>
           }
         />
+        <ViewModal
+          open={open} handleClose={handleClose} handleOpen={handleOpen} data={dataRow}
+        />
       </DashboardContent>
+
 
     </>
   );

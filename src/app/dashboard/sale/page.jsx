@@ -5,7 +5,7 @@ import { SalesApplicationsListView } from 'src/sections/sales';
 
 // ----------------------------------------------------------------------
 
-export const metadata = { title: `Page two | Dashboard - ${CONFIG.appName}` };
+export const metadata = { title: `Sales | Dashboard - ${CONFIG.appName}` };
 
 export default function Page() {
   return <SalesApplicationsListView title="Sales Enquiries" />;

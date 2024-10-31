@@ -1,6 +1,4 @@
 import { gridClasses } from "@mui/material";
-import { text } from "../core";
-import { color } from "framer-motion";
 
 export const table_header_sx={
     [`& .${gridClasses.cell}`]: {
