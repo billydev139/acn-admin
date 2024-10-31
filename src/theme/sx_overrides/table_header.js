@@ -11,6 +11,6 @@ export const table_header_sx={
       backgroundColor: '#B29146 !important', // Replace with your desired background color
     },
     "& .css-t89xny-MuiDataGrid-columnHeaderTitle ": {
-        color: "white"
+        color: "white !important"
     }
   }
