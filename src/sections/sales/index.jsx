@@ -18,7 +18,10 @@ import { ConfirmDialog } from 'src/components/custom-dialog';
 import { CustomBreadcrumbs } from 'src/components/custom-breadcrumbs';
 import { useBoolean } from 'src/hooks/use-boolean';
 import { getCareerApplications } from 'src/apis/careerApi';
-import { getAllSalesContacts } from 'src/apis/salesContactApi';
+import { deleteSalesContact, getAllSalesContacts } from 'src/apis/salesContactApi';
+import { DashboardContent } from 'src/layouts/dashboard';
+import { button_sx } from 'src/theme/sx_overrides/button';
+import { table_header_sx } from 'src/theme/sx_overrides/table_header';
 
 // ----------------------------------------------------------------------
 
@@ -28,21 +31,32 @@ export function SalesApplicationsListView() {
     const [selectedRowIds, setSelectedRowIds] = useState([]);
     const [filterButtonEl, setFilterButtonEl] = useState(null);
 
+    const [deleteing, setDeleteing] = useState(false)
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await getAllSalesContacts();
+            console.log(response);
             setTableData(response.data);
         };
         fetchData();
-    }, []);
+    }, [deleteing]);
 
     const handleDeleteRow = useCallback(
         (id) => {
-            const updatedData = tableData.filter((row) => row.email !== id);
-            toast.success('Delete success!');
-            setTableData(updatedData);
+            setDeleteing(true);
+            deleteSalesContact(id)
+                .then(() => {
+                    toast.success('Delete success!');
+                })
+                .catch((error) => {
+                    console.error('Error Deleting:', error);
+                })
+                .finally(() => {
+                    setDeleteing(false);
+                });
         },
-        [tableData]
+        []
     );
 
     const handleDeleteRows = useCallback(() => {
@@ -82,7 +96,7 @@ export function SalesApplicationsListView() {
                     showInMenu
                     icon={<Iconify icon="solar:trash-bin-trash-bold" />}
                     label="Delete"
-                    onClick={() => handleDeleteRow(params.row.email)}
+                    onClick={() => handleDeleteRow(params.row._id)}
                     sx={{ color: 'error.main' }}
                 />,
             ],
@@ -91,63 +105,69 @@ export function SalesApplicationsListView() {
 
     return (
         <>
-            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', mb: 3 }}>
-                <CustomBreadcrumbs
-                    heading='Sales Enquiries'
-                    links={[
-                        { name: 'Dashboard', href: '/' },
-                        { name: 'Sales' },
-                    ]}
+            <DashboardContent>
+
+                <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', mb: 3 }}>
+                    <CustomBreadcrumbs
+                        heading='Sales Enquiries'
+                        links={[
+                            { name: 'Dashboard', href: '/' },
+                            { name: 'Sales' },
+                        ]}
+                        // action={
+                        //     <Button variant="contained"
+                        //         sx={button_sx}
+                        //         startIcon={<Iconify icon="mingcute:add-line" />}>
+                        //         New Application
+                        //     </Button>
+                        // }
+                        sx={{ mb: { xs: 3, md: 5 } }}
+                    />
+
+                    <Card sx={{ flexGrow: 1, mt: 3 }}>
+
+                        <DataGrid
+                            checkboxSelection
+                            disableRowSelectionOnClick
+                            rows={tableData}
+                            columns={columns}
+                            getRowId={(row) => row._id}
+
+                            pageSizeOptions={[5, 10, 25]}
+                            onRowSelectionModelChange={(newSelection) => setSelectedRowIds(newSelection)}
+                            components={{
+                                Toolbar: () => (
+                                    <GridToolbarContainer  >
+                                        <GridToolbarQuickFilter />
+                                        {!!selectedRowIds.length && (
+                                            <Button
+                                                color="error"
+                                                onClick={() => confirmRows.onTrue()}
+                                                startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                            >
+                                                Delete Selected ({selectedRowIds.length})
+                                            </Button>
+                                        )}
+                                    </GridToolbarContainer>
+                                ),
+                            }}
+                            sx={{ [`& .${gridClasses.cell}`]: { alignItems: 'center', display: 'inline-flex' }, ...table_header_sx }}
+                        />
+                    </Card>
+                </Box>
+
+                <ConfirmDialog
+                    open={confirmRows.value}
+                    onClose={confirmRows.onFalse}
+                    title="Delete Items"
+                    content={`Are you sure you want to delete ${selectedRowIds.length} item(s)?`}
                     action={
-                        <Button variant="contained" startIcon={<Iconify icon="mingcute:add-line" />}>
-                            New Application
+                        <Button color="error" onClick={handleDeleteRows} variant="contained">
+                            Delete
                         </Button>
                     }
-                    sx={{ mb: { xs: 3, md: 5 } }}
                 />
-
-                <Card sx={{ flexGrow: 1, mt: 3 }}>
-
-                    <DataGrid
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                        rows={tableData}
-                        columns={columns}
-                        getRowId={(row) => row.email} // Use email as a unique identifier
-                        pageSizeOptions={[5, 10, 25]}
-                        onRowSelectionModelChange={(newSelection) => setSelectedRowIds(newSelection)}
-                        components={{
-                            Toolbar: () => (
-                                <GridToolbarContainer  >
-                                    <GridToolbarQuickFilter />
-                                    {!!selectedRowIds.length && (
-                                        <Button
-                                            color="error"
-                                            onClick={() => confirmRows.onTrue()}
-                                            startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                        >
-                                            Delete Selected ({selectedRowIds.length})
-                                        </Button>
-                                    )}
-                                </GridToolbarContainer>
-                            ),
-                        }}
-                        sx={{ [`& .${gridClasses.cell}`]: { alignItems: 'center', display: 'inline-flex' } }}
-                    />
-                </Card>
-            </Box>
-
-            <ConfirmDialog
-                open={confirmRows.value}
-                onClose={confirmRows.onFalse}
-                title="Delete Items"
-                content={`Are you sure you want to delete ${selectedRowIds.length} item(s)?`}
-                action={
-                    <Button color="error" onClick={handleDeleteRows} variant="contained">
-                        Delete
-                    </Button>
-                }
-            />
+            </DashboardContent>
         </>
     );
 }

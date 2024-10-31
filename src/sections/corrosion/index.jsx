@@ -10,7 +10,7 @@ import {
     GridActionsCellItem,
 } from '@mui/x-data-grid';
 
-import { Box, Stack } from '@mui/material';
+import { Box, Stack, tableHeadClasses } from '@mui/material';
 import { toast } from 'src/components/snackbar';
 import { Iconify } from 'src/components/iconify';
 import { EmptyContent } from 'src/components/empty-content';
@@ -21,8 +21,11 @@ import { getCareerApplications } from 'src/apis/careerApi';
 import { getAllSalesContacts } from 'src/apis/salesContactApi';
 import { getAllVehicles } from 'src/apis/resaleApi';
 import { getAllContactRequests } from 'src/apis/contactApi';
-import { getAllCorrosionReports } from 'src/apis/corrosionApi';
+import { deleteCorrosionReport, getAllCorrosionReports } from 'src/apis/corrosionApi';
 import { getValueFromValueOptions } from '@mui/x-data-grid/components/panel/filterPanel/filterPanelUtils';
+import { DashboardContent } from 'src/layouts/dashboard';
+import { button_sx } from 'src/theme/sx_overrides/button';
+import { table_header_sx } from 'src/theme/sx_overrides/table_header';
 
 // ----------------------------------------------------------------------
 
@@ -32,23 +35,32 @@ export function CorrosionApplicationsListView() {
     const [selectedRowIds, setSelectedRowIds] = useState([]);
     const [filterButtonEl, setFilterButtonEl] = useState(null);
 
+    const [deleteing, setDeleteing] = useState(false)
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await getAllCorrosionReports();
-            console.log("Fetched table data:", response.data); // Inspect data structure here
+            console.log(response);
             setTableData(response.data);
         };
         fetchData();
-    }, []);
-
+    }, [deleteing]);
 
     const handleDeleteRow = useCallback(
         (id) => {
-            const updatedData = tableData.filter((row) => row.email !== id);
-            toast.success('Delete success!');
-            setTableData(updatedData);
+            setDeleteing(true);
+            deleteCorrosionReport(id)
+                .then(() => {
+                    toast.success('Delete success!');
+                })
+                .catch((error) => {
+                    console.error('Error Deleting:', error);
+                })
+                .finally(() => {
+                    setDeleteing(false);
+                });
         },
-        [tableData]
+        []
     );
 
     const handleDeleteRows = useCallback(() => {
@@ -64,7 +76,7 @@ export function CorrosionApplicationsListView() {
             headerName: 'Salutation',
             width: 100,
             renderCell: (params) => {
-                console.log("Salutation RenderCell params:", params); // Should log params
+                console.log("Salutation RenderCell params:", params);
                 return <span>{params.row?.contactDetails?.salutation || 'N/A'}</span>;
             }
         }, {
@@ -72,7 +84,7 @@ export function CorrosionApplicationsListView() {
             headerName: 'First Name',
             width: 150,
             renderCell: (params) => {
-                console.log("RenderCell params:", params); // Should log params with row data
+                console.log("RenderCell params:", params);
                 return <span>{params.row?.contactDetails?.firstName || 'N/A'}</span>;
             }
         },
@@ -198,7 +210,7 @@ export function CorrosionApplicationsListView() {
                     showInMenu
                     icon={<Iconify icon="solar:trash-bin-trash-bold" />}
                     label="Delete"
-                    onClick={() => handleDeleteRow(params.row.contactDetails?.email)}
+                    onClick={() => handleDeleteRow(params.row._id)}
                     sx={{ color: 'error.main' }}
                 />,
             ],
@@ -207,63 +219,66 @@ export function CorrosionApplicationsListView() {
 
     return (
         <>
-            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', mb: 3 }}>
-                <CustomBreadcrumbs
-                    heading='Corrosion Applications'
-                    links={[
-                        { name: 'Dashboard', href: '/' },
-                        { name: 'Corrosion' },
-                    ]}
+            <DashboardContent>
+
+                <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', mb: 3 }}>
+                    <CustomBreadcrumbs
+                        heading='Corrosion Applications'
+                        links={[
+                            { name: 'Dashboard', href: '/' },
+                            { name: 'Corrosion' },
+                        ]}
+                        // action={
+                        //     <Button variant="contained" sx={button_sx} startIcon={<Iconify icon="mingcute:add-line" />}>
+                        //         New Application
+                        //     </Button>
+                        // }
+                        sx={{ mb: { xs: 3, md: 5 } }}
+                    />
+
+                    <Card sx={{ flexGrow: 1, mt: 3 }}>
+
+                        <DataGrid
+                            checkboxSelection
+                            disableRowSelectionOnClick
+                            rows={tableData}
+                            columns={columns}
+                            getRowId={(row) => row._id}
+                            pageSizeOptions={[5, 10, 25]}
+                            onRowSelectionModelChange={(newSelection) => setSelectedRowIds(newSelection)}
+                            components={{
+                                Toolbar: () => (
+                                    <GridToolbarContainer  >
+                                        <GridToolbarQuickFilter />
+                                        {!!selectedRowIds.length && (
+                                            <Button
+                                                color="error"
+                                                onClick={() => confirmRows.onTrue()}
+                                                startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
+                                            >
+                                                Delete Selected ({selectedRowIds.length})
+                                            </Button>
+                                        )}
+                                    </GridToolbarContainer>
+                                ),
+                            }}
+                            sx={{ [`& .${gridClasses.cell}`]: { alignItems: 'center', display: 'inline-flex' }, ...table_header_sx }}
+                        />
+                    </Card>
+                </Box>
+
+                <ConfirmDialog
+                    open={confirmRows.value}
+                    onClose={confirmRows.onFalse}
+                    title="Delete Items"
+                    content={`Are you sure you want to delete ${selectedRowIds.length} item(s)?`}
                     action={
-                        <Button variant="contained" startIcon={<Iconify icon="mingcute:add-line" />}>
-                            New Application
+                        <Button color="error" onClick={handleDeleteRows} variant="contained">
+                            Delete
                         </Button>
                     }
-                    sx={{ mb: { xs: 3, md: 5 } }}
                 />
-
-                <Card sx={{ flexGrow: 1, mt: 3 }}>
-
-                    <DataGrid
-                        checkboxSelection
-                        disableRowSelectionOnClick
-                        rows={tableData}
-                        columns={columns}
-                        getRowId={(row) => row._id} // Use _id as a unique identifier
-                        pageSizeOptions={[5, 10, 25]}
-                        onRowSelectionModelChange={(newSelection) => setSelectedRowIds(newSelection)}
-                        components={{
-                            Toolbar: () => (
-                                <GridToolbarContainer  >
-                                    <GridToolbarQuickFilter />
-                                    {!!selectedRowIds.length && (
-                                        <Button
-                                            color="error"
-                                            onClick={() => confirmRows.onTrue()}
-                                            startIcon={<Iconify icon="solar:trash-bin-trash-bold" />}
-                                        >
-                                            Delete Selected ({selectedRowIds.length})
-                                        </Button>
-                                    )}
-                                </GridToolbarContainer>
-                            ),
-                        }}
-                        sx={{ [`& .${gridClasses.cell}`]: { alignItems: 'center', display: 'inline-flex' } }}
-                    />
-                </Card>
-            </Box>
-
-            <ConfirmDialog
-                open={confirmRows.value}
-                onClose={confirmRows.onFalse}
-                title="Delete Items"
-                content={`Are you sure you want to delete ${selectedRowIds.length} item(s)?`}
-                action={
-                    <Button color="error" onClick={handleDeleteRows} variant="contained">
-                        Delete
-                    </Button>
-                }
-            />
+            </DashboardContent>
         </>
     );
 }

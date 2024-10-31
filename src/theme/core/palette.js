@@ -8,8 +8,8 @@ export const grey = createPaletteChannel(COLORS.grey);
 
 // Primary (Button color)
 export const primary = createPaletteChannel({
-  main: '#B29146', // Button color
-  contrastText: '#FFFFFF', // Ensure text on button is readable
+  main: '#5BE49B', // Button color
+  contrastText: '#00A76F', // Ensure text on button is readable
 });
 
 // Secondary
@@ -44,6 +44,10 @@ export const text = {
   }),
 };
 
+export const gold = createPaletteChannel({
+  main: '#B29146', 
+  contrastText: '#FFFFFF', 
+});
 export const background = {
   light: createPaletteChannel({
     paper: '#FFFFFF',
