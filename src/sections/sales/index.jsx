@@ -22,6 +22,7 @@ import { deleteSalesContact, getAllSalesContacts } from 'src/apis/salesContactAp
 import { DashboardContent } from 'src/layouts/dashboard';
 import { button_sx } from 'src/theme/sx_overrides/button';
 import { table_header_sx } from 'src/theme/sx_overrides/table_header';
+import SalesViewModal from './viewModal';
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +31,12 @@ export function SalesApplicationsListView() {
     const [tableData, setTableData] = useState([]);
     const [selectedRowIds, setSelectedRowIds] = useState([]);
     const [filterButtonEl, setFilterButtonEl] = useState(null);
-
+    const [open, setOpen] = useState(false);
+    const [dataRow, setDataRow] = useState()
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const [deleteing, setDeleteing] = useState(false)
+
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,6 +71,10 @@ export function SalesApplicationsListView() {
         confirmRows.onFalse();
     }, [selectedRowIds, tableData, confirmRows]);
 
+    const handleView = useCallback(() => {
+        handleOpen()
+    }, [])
+
     const columns = [
         { field: 'name', headerName: 'Name', width: 200 },
         { field: 'company', headerName: 'Company', width: 200 },
@@ -90,7 +99,11 @@ export function SalesApplicationsListView() {
                     showInMenu
                     icon={<Iconify icon="solar:eye-bold" />}
                     label="View"
-                    onClick={() => console.log('View', params.row)}
+                    onClick={() => {
+                        console.log(params.row);
+                        setDataRow(params.row);
+                        handleView();
+                    }}
                 />,
                 <GridActionsCellItem
                     showInMenu
@@ -166,6 +179,9 @@ export function SalesApplicationsListView() {
                             Delete
                         </Button>
                     }
+                />
+                <SalesViewModal
+                    open={open} handleClose={handleClose} handleOpen={handleOpen} data={dataRow}
                 />
             </DashboardContent>
         </>

@@ -46,7 +46,7 @@ const ViewModal = ({ open, handleClose, data }) => (
                         position: 'relative',
                         padding: 4,
                         borderRadius: 2,
-                        backgroundImage: 'url(/assets/images/mock/cover/cover-15.webp)', // Replace with your image path
+                        backgroundImage: 'url(/assets/images/mock/cover/cover-15.webp)',
                         backgroundSize: 'cover',
                         backgroundPosition: 'top',
                     }}
