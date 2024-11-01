@@ -58,8 +58,17 @@ export const navData = [
           { title: 'View', path: paths.dashboard.resale.view('null') },
         ],
       },
+      {
+        title: 'Corrosion',
+        path: paths.dashboard.corrosion.root,
+        icon: ICONS.ecommerce,
+        children: [
+          { title: 'List', path: paths.dashboard.corrosion.root },
+          { title: 'View', path: paths.dashboard.corrosion.view('null') },
+        ],
+      },
       { title: 'Contact', path: paths.dashboard.contact, icon: ICONS.ecommerce },
-      { title: 'Corrosion', path: paths.dashboard.corrosion, icon: ICONS.ecommerce },
+      // { title: 'Corrosion', path: paths.dashboard.corrosion, icon: ICONS.ecommerce },
       { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
     ],
   },

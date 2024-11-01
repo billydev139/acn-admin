@@ -19,6 +19,7 @@ function ResaleViewPage({ id }) {
             router.push('/dashboard/resale');
         }
     }, [id, router]);
+
     useEffect(() => {
         async function fetchVehicleData() {
             const data = await getVehicleById(id);
@@ -66,7 +67,7 @@ function ResaleViewPage({ id }) {
     return (
         <DashboardContent>
             <CustomBreadcrumbs
-                heading="Edit Vehicle"
+                heading="VIew Vehicle"
                 links={[
                     { name: 'Dashboard', href: paths.dashboard.root },
                     { name: 'Resale', href: paths.dashboard.resale.root },

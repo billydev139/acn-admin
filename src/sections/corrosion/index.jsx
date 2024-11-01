@@ -26,6 +26,7 @@ import { getValueFromValueOptions } from '@mui/x-data-grid/components/panel/filt
 import { DashboardContent } from 'src/layouts/dashboard';
 import { button_sx } from 'src/theme/sx_overrides/button';
 import { table_header_sx } from 'src/theme/sx_overrides/table_header';
+import { useRouter } from 'next/navigation';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +35,7 @@ export function CorrosionApplicationsListView() {
     const [tableData, setTableData] = useState([]);
     const [selectedRowIds, setSelectedRowIds] = useState([]);
     const [filterButtonEl, setFilterButtonEl] = useState(null);
-
+    const router = useRouter();
     const [deleteing, setDeleteing] = useState(false)
 
     useEffect(() => {
@@ -199,7 +200,10 @@ export function CorrosionApplicationsListView() {
                     showInMenu
                     icon={<Iconify icon="solar:eye-bold" />}
                     label="View"
-                    onClick={() => console.log('View', params.row)}
+                    onClick={() => {
+                        const id = params.row._id;
+                        router.push(`/dashboard/corrosion/${id}`);
+                    }}
                 />,
                 <GridActionsCellItem
                     showInMenu
