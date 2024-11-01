@@ -1,5 +1,5 @@
-// src/apis/vehicleApi.js
 import axiosInstance, { endpoints } from 'src/utils/axios';
+import { toast } from 'sonner';
 
 // Create a new resale request (POST /vehicles)
 export const createResaleRequest = async (data) => {
@@ -8,6 +8,7 @@ export const createResaleRequest = async (data) => {
     return response.data;
   } catch (error) {
     console.error("Error creating resale request:", error);
+    toast.error('Error creating resale request');
     throw error;
   }
 };
@@ -19,6 +20,7 @@ export const getAllVehicles = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching vehicles:", error);
+    toast.error('Error fetching vehicles');
     throw error;
   }
 };
@@ -30,6 +32,7 @@ export const getVehicleById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching vehicle by ID:", error);
+    toast.error('Error fetching vehicle by ID');
     throw error;
   }
 };
@@ -41,6 +44,7 @@ export const updateVehicle = async (id, data) => {
     return response.data;
   } catch (error) {
     console.error("Error updating vehicle:", error);
+    toast.error('Error updating vehicle');
     throw error;
   }
 };
@@ -52,6 +56,7 @@ export const deleteVehicle = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error deleting vehicle:", error);
+    toast.error('Error deleting vehicle');
     throw error;
   }
 };

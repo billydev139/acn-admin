@@ -9,11 +9,15 @@ export const table_header_sx={
     "& .MuiDataGrid-container--top [role='row'], & .MuiDataGrid-container--bottom [role='row']": {
       backgroundColor: '#B29146 !important', // Replace with your desired background color
     },
-    "& .css-t89xny-MuiDataGrid-columnHeaderTitle ": {
-        color: "white !important"
-    }, 
-    "& .css-157q7pp .MuiDataGrid-columnHeaderTitleContainer": {
+    // "& .css-t89xny-MuiDataGrid-columnHeaderTitle .css-mh3zap .css-3q0fnb .MuiDataGrid-columnHeaderTitleContainer": {
+    //     color: "white !important"
+    // }, 
+    "& .MuiDataGrid-columnHeaderTitleContainer": {
         color:"white !important"
+    },
+    "& .MuiSvgIcon-root":{
+        color:"white !important"
+
     }
   
   }

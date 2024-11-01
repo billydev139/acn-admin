@@ -49,10 +49,17 @@ export const navData = [
       { title: 'One', path: paths.dashboard.root, icon: ICONS.dashboard },
       { title: 'Career', path: paths.dashboard.career, icon: ICONS.ecommerce },
       { title: 'Sales', path: paths.dashboard.sale, icon: ICONS.ecommerce },
-      { title: 'Resale', path: paths.dashboard.resale, icon: ICONS.ecommerce },
+      {
+        title: 'Resale',
+        path: paths.dashboard.resale.root,
+        icon: ICONS.ecommerce,
+        children: [
+          { title: 'List', path: paths.dashboard.resale.root },
+          { title: 'View', path: paths.dashboard.resale.view('null') },
+        ],
+      },
       { title: 'Contact', path: paths.dashboard.contact, icon: ICONS.ecommerce },
       { title: 'Corrosion', path: paths.dashboard.corrosion, icon: ICONS.ecommerce },
-
       { title: 'Three', path: paths.dashboard.three, icon: ICONS.analytics },
     ],
   },

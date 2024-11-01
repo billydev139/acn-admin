@@ -76,16 +76,16 @@ export function SalesApplicationsListView() {
     }, [])
 
     const columns = [
-        { field: 'name', headerName: 'Name', width: 200 },
-        { field: 'company', headerName: 'Company', width: 200 },
-        { field: 'street', headerName: 'Street', width: 200 },
-        { field: 'zipCode', headerName: 'Zip Code', width: 100 },
-        { field: 'location', headerName: 'Location', width: 150 },
-        { field: 'country', headerName: 'Country', width: 150 },
-        { field: 'email', headerName: 'Email', width: 250 },
-        { field: 'phone', headerName: 'Phone', width: 150 },
-        { field: 'news', headerName: 'News', width: 250 },
-        { field: 'car', headerName: 'Car Model', width: 200 },
+        { field: 'name', headerName: 'Name', width: 200, disableColumnMenu: true },
+        { field: 'company', headerName: 'Company', width: 200, disableColumnMenu: true },
+        { field: 'street', headerName: 'Street', width: 200, disableColumnMenu: true },
+        { field: 'zipCode', headerName: 'Zip Code', width: 100, disableColumnMenu: true },
+        { field: 'location', headerName: 'Location', width: 150, disableColumnMenu: true },
+        { field: 'country', headerName: 'Country', width: 150, disableColumnMenu: true },
+        { field: 'email', headerName: 'Email', width: 250, disableColumnMenu: true },
+        { field: 'phone', headerName: 'Phone', width: 150, disableColumnMenu: true },
+        { field: 'news', headerName: 'News', width: 250, disableColumnMenu: true },
+        { field: 'car', headerName: 'Car Model', width: 200, disableColumnMenu: true },
         {
             type: 'actions',
             field: 'actions',

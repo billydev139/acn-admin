@@ -1,5 +1,5 @@
-// src/apis/corrosionReportApi.js
 import axiosInstance, { endpoints } from 'src/utils/axios';
+import { toast } from 'sonner';
 
 // Create a new corrosion report (POST /corrosion-reports)
 export const createCorrosionReport = async (data) => {
@@ -8,6 +8,7 @@ export const createCorrosionReport = async (data) => {
     return response.data;
   } catch (error) {
     console.error("Error creating corrosion report:", error);
+    toast.error('Error creating corrosion report');
     throw error;
   }
 };
@@ -19,6 +20,7 @@ export const getAllCorrosionReports = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching corrosion reports:", error);
+    toast.error('Error fetching corrosion reports');
     throw error;
   }
 };
@@ -30,6 +32,7 @@ export const getCorrosionReportById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching corrosion report by ID:", error);
+    toast.error('Error fetching corrosion report by ID');
     throw error;
   }
 };
@@ -41,6 +44,7 @@ export const updateCorrosionReport = async (id, data) => {
     return response.data;
   } catch (error) {
     console.error("Error updating corrosion report:", error);
+    toast.error('Error updating corrosion report');
     throw error;
   }
 };
@@ -52,6 +56,7 @@ export const deleteCorrosionReport = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error deleting corrosion report:", error);
+    toast.error('Error deleting corrosion report');
     throw error;
   }
 };

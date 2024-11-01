@@ -2,7 +2,7 @@ import React from 'react';
 import { Modal, Box, Typography, Stack, Avatar, Paper, ListItemText, Link, Fade, IconButton, Grid } from '@mui/material';
 import { GridCloseIcon } from '@mui/x-data-grid';
 
-const SalesViewModal = ({ open, handleClose, data }) => (
+const ViewModal = ({ open, handleClose, data }) => (
     <Modal
         keepMounted
         open={open}
@@ -38,7 +38,7 @@ const SalesViewModal = ({ open, handleClose, data }) => (
                 >
                     <GridCloseIcon />
                 </IconButton>
-
+                {/* Paper with Background Image */}
                 <Paper
                     elevation={3}
                     sx={{
@@ -52,6 +52,7 @@ const SalesViewModal = ({ open, handleClose, data }) => (
                 >
                     <Stack direction="row" spacing={2} alignItems="center">
                         <Avatar
+                            alt="User Avatar"
                             sx={{
                                 width: 100,
                                 height: 100,
@@ -61,8 +62,6 @@ const SalesViewModal = ({ open, handleClose, data }) => (
                                 transform: 'translateX(-10%)',
                                 border: '3px solid white',
                                 boxShadow: 3,
-                                backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                                color: 'white',
                             }}
                         >
                             {data?.name?.charAt(0).toUpperCase()}
@@ -84,68 +83,48 @@ const SalesViewModal = ({ open, handleClose, data }) => (
                         </Box>
                     </Stack>
                 </Paper>
-                <Grid justifyContent='center' alignItems='center' container sx={{ mt: 2 }}>
-                    <Typography variant="h6">
-                        {data?.car}
-                    </Typography>
-                </Grid>
                 <Grid container spacing={2} sx={{ mt: 2 }}>
-                    {/* Personal Info Block */}
                     <Grid item xs={12} md={6}>
-                        <Box
+                        <Box display="flex" flexDirection="column" gap={1}
                             sx={{
                                 p: 3,
 
                                 height: '100%', // Ensures both blocks are the same height
                             }}
                         >
-                            <Typography variant="h6" gutterBottom>
-                                Personal Info
-                            </Typography>
-                            <Typography variant="body1">
+
+                            <Typography variant='h5' >Personal Info</Typography>
+                            <Typography variant="body1" sx={{ marginTop: 2 }}>
                                 <strong>Company:</strong> {data?.company}
                             </Typography>
-                            <Typography variant="body1">
-                                <strong>Street:</strong> {data?.street}
+                            <Typography variant="body1" sx={{ marginTop: 2 }}>
+                                <strong>Address:</strong> {`${data?.street}, ${data?.zipCode}, ${data?.location}, ${data?.country}`}
                             </Typography>
-                            <Typography variant="body1">
-                                <strong>Zip Code:</strong> {data?.zipCode}
-                            </Typography>
-                            <Typography variant="body1">
-                                <strong>Location:</strong> {data?.location}
-                            </Typography>
-                            <Typography variant="body1">
-                                <strong>Country:</strong> {data?.country}
-                            </Typography>
-                            <Typography variant="body1">
+                            <Typography variant="body1" sx={{ marginTop: 2 }}>
                                 <strong>Phone Number:</strong> {data?.phone}
                             </Typography>
                         </Box>
                     </Grid>
-
-                    {/* News Block */}
-                    <Grid item xs={12} md={6}>
-                        <Box
-                            sx={{
-                                p: 3,
-                                border: '1px solid #ddd',
-                                borderRadius: 2,
-                                height: '100%', // Ensures both blocks are the same height
-                            }}
-                        >
-                            <Typography variant="h6" gutterBottom>
-                                News
-                            </Typography>
-                            <Typography variant="body1">
-                                {data?.news || "There is no news for the query right now. Connect with the customer for more info."}
-                            </Typography>
-                        </Box>
+                    <Grid item xs={12} md={6} mt={2}
+                        sx={{
+                            p: 3,
+                            border: '1px solid #ddd',
+                            borderRadius: 2,
+                            height: '100%', // Ensures both blocks are the same height
+                        }}>
+                        <Typography variant='h5'>Support Message</Typography>
+                        <Typography variant="body1" sx={{ marginTop: 2 }}>
+                            {data?.supportMessage || "There is no support meesage! Direct contact the customer."}
+                        </Typography>
                     </Grid>
                 </Grid>
+
+
+
 
             </Box>
         </Fade>
     </Modal>
 );
 
-export default SalesViewModal;
+export default ViewModal;

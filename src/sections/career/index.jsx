@@ -71,14 +71,14 @@ export function CareerApplicationsListView() {
     handleOpen()
   }, [])
   const columns = [
-    { field: 'fullName', headerName: 'Full Name', width: 200 },
-    { field: 'email', headerName: 'Email', width: 250 },
-    { field: 'phoneNumber', headerName: 'Phone Number', width: 150 },
-    { field: 'country', headerName: 'Country', width: 150 },
+    { field: 'fullName', headerName: 'Full Name', width: 200, disableColumnMenu: true },
+    { field: 'email', headerName: 'Email', width: 250, disableColumnMenu: true },
+    { field: 'phoneNumber', headerName: 'Phone Number', width: 150, disableColumnMenu: true },
+    { field: 'country', headerName: 'Country', width: 150, disableColumnMenu: true },
     {
       field: 'cv',
       headerName: 'CV',
-      width: 100,
+      width: 100, disableColumnMenu: true,
       renderCell: (params) => (
         <Button variant="text" href={params.value} target="_blank">
           View CV
@@ -88,7 +88,7 @@ export function CareerApplicationsListView() {
     {
       field: 'motivationLetter',
       headerName: 'Motivation Letter',
-      width: 150,
+      width: 150, disableColumnMenu: true,
       renderCell: (params) => (
         <Button variant="text" href={params.value} target="_blank">
           View Letter

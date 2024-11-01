@@ -45,14 +45,17 @@ export const paths = {
     root: ROOTS.DASHBOARD,
     career: `${ROOTS.DASHBOARD}/career`,
     sale: `${ROOTS.DASHBOARD}/sale`,
-    resale: `${ROOTS.DASHBOARD}/resale`,    
-    corrosion: `${ROOTS.DASHBOARD}/corrosion`,    
+    resale: {
+        root: `${ROOTS.DASHBOARD}/resale`,
+        view: (id) => `${ROOTS.DASHBOARD}/resale/${id}`,  // Dynamic path for viewing specific resale item
+    },
+    corrosion: `${ROOTS.DASHBOARD}/corrosion`,
     contact: `${ROOTS.DASHBOARD}/contact`,
     three: `${ROOTS.DASHBOARD}/three`,
     group: {
-      root: `${ROOTS.DASHBOARD}/group`,
-      five: `${ROOTS.DASHBOARD}/group/five`,
-      six: `${ROOTS.DASHBOARD}/group/six`,
+        root: `${ROOTS.DASHBOARD}/group`,
+        five: `${ROOTS.DASHBOARD}/group/five`,
+        six: `${ROOTS.DASHBOARD}/group/six`,
     },
-  },
+},
 };

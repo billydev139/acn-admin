@@ -74,121 +74,116 @@ export function CorrosionApplicationsListView() {
         {
             field: 'salutation',
             headerName: 'Salutation',
-            width: 100,
-            renderCell: (params) => {
-                console.log("Salutation RenderCell params:", params);
-                return <span>{params.row?.contactDetails?.salutation || 'N/A'}</span>;
-            }
+            width: 100, disableColumnMenu: true,
+            renderCell: (params) => <span>{params.row?.contactDetails?.salutation || 'N/A'}</span>
+
         }, {
             field: 'firstName',
             headerName: 'First Name',
-            width: 150,
-            renderCell: (params) => {
-                console.log("RenderCell params:", params);
-                return <span>{params.row?.contactDetails?.firstName || 'N/A'}</span>;
-            }
+            width: 150, disableColumnMenu: true,
+            renderCell: (params) => <span>{params.row?.contactDetails?.firstName || 'N/A'}</span>
         },
 
         {
             field: 'lastName',
             headerName: 'Last Name',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.lastName || 'N/A'}</span>
         },
         {
             field: 'company',
             headerName: 'Company',
-            width: 200,
+            width: 200, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.company || 'N/A'}</span>
         },
         {
             field: 'street',
             headerName: 'Street',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.street || 'N/A'}</span>
         },
         {
             field: 'houseNumber',
             headerName: 'House Number',
-            width: 120,
+            width: 120, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.houseNumber || 'N/A'}</span>
         },
         {
             field: 'zipCode',
             headerName: 'Zip Code',
-            width: 100,
+            width: 100, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.zipCode || 'N/A'}</span>
         },
         {
             field: 'location',
             headerName: 'Location',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.location || 'N/A'}</span>
         },
         {
             field: 'country',
             headerName: 'Country',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.country || 'N/A'}</span>
         },
         {
             field: 'phoneNumber',
             headerName: 'Phone',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.phoneNumber || 'N/A'}</span>
         },
         {
             field: 'email',
             headerName: 'Email',
-            width: 250,
+            width: 250, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.email || 'N/A'}</span>
         },
         {
             field: 'website',
             headerName: 'Website',
-            width: 200,
+            width: 200, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.contactDetails?.website || 'N/A'}</span>
         },
         {
             field: 'damageData',
             headerName: 'Damage Data',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.insurance?.damageData || 'N/A'}</span>
         },
         {
             field: 'typeOfContract',
             headerName: 'Contract Type',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.insurance?.typeOfContract || 'N/A'}</span>
         },
         {
             field: 'deduction',
             headerName: 'Deduction',
-            width: 100,
+            width: 100, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.insurance?.deduction || 'N/A'}</span>
         },
         {
             field: 'partName',
             headerName: 'Part Name',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.parts?.[0]?.partName || 'N/A'}</span>
         },
         {
             field: 'partDescription',
             headerName: 'Part Description',
-            width: 250,
+            width: 250, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.parts?.[0]?.partDescription || 'N/A'}</span>
         },
         {
             field: 'additionalImage',
             headerName: 'Additional Image',
-            width: 150,
+            width: 150, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.additionalImage || 'N/A'}</span>
         },
         {
             field: 'comments',
             headerName: 'Comments',
-            width: 250,
+            width: 250, disableColumnMenu: true,
             renderCell: (params) => <span>{params.row?.comments || 'N/A'}</span>
         },
         {

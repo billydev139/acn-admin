@@ -23,6 +23,7 @@ import { deleteVehicle, getAllVehicles } from 'src/apis/resaleApi';
 import { DashboardContent } from 'src/layouts/dashboard';
 import { button_sx } from 'src/theme/sx_overrides/button';
 import { table_header_sx } from 'src/theme/sx_overrides/table_header';
+import { useRouter } from 'next/navigation';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +34,7 @@ export function ResaleApplicationsListView() {
     const [filterButtonEl, setFilterButtonEl] = useState(null);
 
     const [deleteing, setDeleteing] = useState(false)
-
+    const router = useRouter();
     useEffect(() => {
         const fetchData = async () => {
             const response = await getAllVehicles();
@@ -68,12 +69,12 @@ export function ResaleApplicationsListView() {
     }, [selectedRowIds, tableData, confirmRows]);
 
     const columns = [
-        { field: 'additionalTitle', headerName: 'Additional Title', width: 180 },
-        { field: 'brand', headerName: 'Brand', width: 150 },
-        { field: 'carNumber', headerName: 'Car Number', width: 150 },
-        { field: 'chassisNumber', headerName: 'Chassis Number', width: 200 },
-        { field: 'fuel', headerName: 'Fuel', width: 200 },
-        { field: 'price', headerName: 'Price', width: 200 },
+        { field: 'additionalTitle', headerName: 'Additional Title', width: 180, disableColumnMenu: true },
+        { field: 'brand', headerName: 'Brand', width: 150, disableColumnMenu: true },
+        { field: 'carNumber', headerName: 'Car Number', width: 150, disableColumnMenu: true },
+        { field: 'chassisNumber', headerName: 'Chassis Number', width: 200, disableColumnMenu: true },
+        { field: 'fuel', headerName: 'Fuel', width: 200, disableColumnMenu: true },
+        { field: 'price', headerName: 'Price', width: 200, disableColumnMenu: true },
         {
             type: 'actions',
             field: 'actions',
@@ -87,7 +88,10 @@ export function ResaleApplicationsListView() {
                     showInMenu
                     icon={<Iconify icon="solar:eye-bold" />}
                     label="View"
-                    onClick={() => console.log('View', params.row)}
+                    onClick={() => {
+                        const id = params.row._id;
+                        router.push(`/dashboard/resale/${id}`);
+                    }}
                 />,
                 <GridActionsCellItem
                     showInMenu

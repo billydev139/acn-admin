@@ -1,5 +1,5 @@
-// src/apis/contactRequestApi.js
 import axiosInstance, { endpoints } from 'src/utils/axios';
+import { toast } from 'sonner';
 
 // Create a new contact request (POST /contact-requests)
 export const createContactRequest = async (data) => {
@@ -8,6 +8,7 @@ export const createContactRequest = async (data) => {
     return response.data;
   } catch (error) {
     console.error("Error creating contact request:", error);
+    toast.error('Error creating contact request');
     throw error;
   }
 };
@@ -19,6 +20,7 @@ export const getAllContactRequests = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching contact requests:", error);
+    toast.error('Error fetching contact requests');
     throw error;
   }
 };
@@ -30,6 +32,7 @@ export const getContactRequestById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching contact request by ID:", error);
+    toast.error('Error fetching contact request by ID');
     throw error;
   }
 };
@@ -41,6 +44,7 @@ export const updateContactRequest = async (id, data) => {
     return response.data;
   } catch (error) {
     console.error("Error updating contact request:", error);
+    toast.error('Error updating contact request');
     throw error;
   }
 };
@@ -52,6 +56,7 @@ export const deleteContactRequest = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error deleting contact request:", error);
+    toast.error('Error deleting contact request');
     throw error;
   }
 };

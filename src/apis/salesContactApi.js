@@ -1,5 +1,5 @@
-// src/apis/salesContactApi.js
 import axiosInstance, { endpoints } from 'src/utils/axios';
+import { toast } from 'sonner';
 
 // Create a new sales contact (POST /sales-contacts)
 export const createSalesContact = async (data) => {
@@ -8,6 +8,7 @@ export const createSalesContact = async (data) => {
     return response.data;
   } catch (error) {
     console.error("Error creating sales contact:", error);
+    toast.error('Error creating sales contact');
     throw error;
   }
 };
@@ -19,6 +20,7 @@ export const getAllSalesContacts = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching sales contacts:", error);
+    toast.error('Error fetching sales contacts');
     throw error;
   }
 };
@@ -30,6 +32,7 @@ export const getSalesContactById = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching sales contact by ID:", error);
+    toast.error('Error fetching sales contact by ID');
     throw error;
   }
 };
@@ -41,6 +44,7 @@ export const updateSalesContact = async (id, data) => {
     return response.data;
   } catch (error) {
     console.error("Error updating sales contact:", error);
+    toast.error('Error updating sales contact');
     throw error;
   }
 };
@@ -52,7 +56,7 @@ export const deleteSalesContact = async (id) => {
     return response.data;
   } catch (error) {
     console.error("Error deleting sales contact:", error);
+    toast.error('Error deleting sales contact');
     throw error;
   }
 };
-     

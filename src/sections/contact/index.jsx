@@ -24,6 +24,7 @@ import { deleteContactRequest, getAllContactRequests } from 'src/apis/contactApi
 import { DashboardContent } from 'src/layouts/dashboard';
 import { button_sx } from 'src/theme/sx_overrides/button';
 import { table_header_sx } from 'src/theme/sx_overrides/table_header';
+import ViewModal from './viewModal';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +34,10 @@ export function ContactApplicationsListView() {
     const [selectedRowIds, setSelectedRowIds] = useState([]);
     const [filterButtonEl, setFilterButtonEl] = useState(null);
     const [deleteing, setDeleteing] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [dataRow, setDataRow] = useState()
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -66,17 +71,19 @@ export function ContactApplicationsListView() {
         setTableData(updatedData);
         confirmRows.onFalse();
     }, [selectedRowIds, tableData, confirmRows]);
-
+    const handleView = useCallback(() => {
+        handleOpen()
+    }, [])
     const columns = [
-        { field: 'name', headerName: 'Name', width: 200 },
-        { field: 'company', headerName: 'Company', width: 200 },
-        { field: 'street', headerName: 'Street', width: 200 },
-        { field: 'zipCode', headerName: 'Zip Code', width: 100 },
-        { field: 'location', headerName: 'Location', width: 150 },
-        { field: 'country', headerName: 'Country', width: 150 },
-        { field: 'email', headerName: 'Email', width: 250 },
-        { field: 'phone', headerName: 'Phone', width: 150 },
-        { field: 'supportMessage', headerName: 'Support Message', width: 300 },
+        { field: 'name', headerName: 'Name', width: 200, disableColumnMenu: true },
+        { field: 'company', headerName: 'Company', width: 200, disableColumnMenu: true },
+        { field: 'street', headerName: 'Street', width: 200, disableColumnMenu: true },
+        { field: 'zipCode', headerName: 'Zip Code', width: 100, disableColumnMenu: true },
+        { field: 'location', headerName: 'Location', width: 150, disableColumnMenu: true },
+        { field: 'country', headerName: 'Country', width: 150, disableColumnMenu: true },
+        { field: 'email', headerName: 'Email', width: 250, disableColumnMenu: true },
+        { field: 'phone', headerName: 'Phone', width: 150, disableColumnMenu: true },
+        { field: 'supportMessage', headerName: 'Support Message', width: 300, disableColumnMenu: true },
         {
             type: 'actions',
             field: 'actions',
@@ -90,7 +97,10 @@ export function ContactApplicationsListView() {
                     showInMenu
                     icon={<Iconify icon="solar:eye-bold" />}
                     label="View"
-                    onClick={() => console.log('View', params.row)}
+                    onClick={() => {
+                        setDataRow(params.row);
+                        handleView();
+                    }}
                 />,
                 <GridActionsCellItem
                     showInMenu
@@ -169,6 +179,9 @@ export function ContactApplicationsListView() {
                             Delete
                         </Button>
                     }
+                />
+                <ViewModal
+                    open={open} handleClose={handleClose} handleOpen={handleOpen} data={dataRow}
                 />
             </DashboardContent>
         </>
